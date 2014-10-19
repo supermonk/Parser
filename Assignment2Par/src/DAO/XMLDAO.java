@@ -1,17 +1,15 @@
 package DAO;
 
 import java.io.StringReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.w3c.dom.CharacterData;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -24,6 +22,7 @@ public class XMLDAO {
 	String[][] matx ;
 	int maxR=0;
 	int maxC =0;
+public static final String dateTimeFormat = "MM/dd/yyyy";
 	
 	public XMLDAO(int row, int col){
 		// defensive by alloting extra row and column
@@ -125,5 +124,57 @@ public class XMLDAO {
 		     }
 		 
 		   }
+
+	 // send records only above current date
+	public void readXML(String k, Calendar date) {
+		readXML(k);
+		String[][] rem = new String[maxC][maxR];
+		try{
+			for(int id=0, j=0;id<maxR;id++){
+				if(datecompare(matx[id][0], date)){
+					rem[j]=matx[id];
+					j++;
+				}
+			}
+			// reset the matrix
+			matx = rem;
+			maxR = rem.length;
+		}catch(Exception e){
+			System.out.println("unable to filter"); 
+		}
+		
+		
+		
+	}
+
+	private boolean datecompare(String string, Calendar date) {
+		if(string == null)
+			return false;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat(dateTimeFormat);
+		Date date1 = null;
+    	try {
+			 date1 = sdf.parse(string);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
+		SimpleDateFormat dateFormat = new SimpleDateFormat(dateTimeFormat);
+		String sDate = dateFormat.format(date.getTime());
+		Date today = null;
+		try {
+			 today = dateFormat.parse(sDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(date1 +""+today);
+		
+		if(date1.compareTo(today)>=0){
+			return true;
+		}
+		return false;
+	}
 
 }
