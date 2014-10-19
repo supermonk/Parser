@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.SAXParser;
@@ -148,6 +149,20 @@ public static final String dateTimeFormat = "MM/dd/yyyy";
 		}
 		
 		
+		
+	}
+	
+	public LinkedList<LinkedList<String>> returnList(){
+		LinkedList<LinkedList<String>> li = new LinkedList<LinkedList<String>>();
+		for(int i=0;i<this.maxR;i++){
+			LinkedList<String> tt = new LinkedList<String>();
+			for(int j=0;j<this.maxC;j++){
+				if(this.matx[i][j]!=null)
+				tt.add(this.matx[i][j]);
+			}
+			li.add(tt);
+		}
+		return li;
 		
 	}
 

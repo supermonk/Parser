@@ -1,6 +1,7 @@
 package com;
 
 import java.util.Calendar;
+import java.util.LinkedList;
 
 import DAO.XMLDAO;
 
@@ -25,7 +26,9 @@ public class TEST {
 		System.out.println(date);
 		
 		xmldao.readXML(k, date);
-		xmldao.print();
+		//xmldao.print();
+		LinkedList<LinkedList<String>>  tt = xmldao.returnList();
+		System.out.println(tt.toString());
 		
 		
 		
