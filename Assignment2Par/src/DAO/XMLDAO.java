@@ -131,7 +131,11 @@ public static final String dateTimeFormat = "MM/dd/yyyy";
 		String[][] rem = new String[maxC][maxR];
 		try{
 			for(int id=0, j=0;id<maxR;id++){
+				
 				if(datecompare(matx[id][0], date)){
+					rem[j]=matx[id];
+					j++;
+				}else if (!matx[id][0].contains("/")){
 					rem[j]=matx[id];
 					j++;
 				}
@@ -150,6 +154,7 @@ public static final String dateTimeFormat = "MM/dd/yyyy";
 	private boolean datecompare(String string, Calendar date) {
 		if(string == null)
 			return false;
+		System.out.println(string);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat(dateTimeFormat);
 		Date date1 = null;
